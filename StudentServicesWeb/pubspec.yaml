@@ -1,0 +1,9 @@
+name: student_services_web
+description: Dart backend for Student Services Web
+version: 1.0.0
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  path: ^1.9.1
+  supabase: ^2.14.0
+  web: ^1.1.1

@@ -1,0 +1,86 @@
+<main class="container">
+    <section class="page-header animate-fade-in">
+        <h1>حل الواجبات الجامعية</h1>
+        <p>نحن نساعدك في حل الواجبات المعقدة بطرق احترافية تضمن لك التفوق.</p>
+    </section>
+
+    <div class="grid-3 animate-fade-in delay-1" style="margin-bottom: 50px;">
+        <div class="glass-card">
+            <h3 style="color: var(--accent-color); margin-bottom: 10px;">حلول مخصصة</h3>
+            <p>نقدم إجابات وشروحات مفصلة لجميع أسئلة الواجب بوضوح وسهولة.</p>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: var(--primary-color); margin-bottom: 10px;">تسليم في الوقت</h3>
+            <p>الالتزام بتسليم الواجبات في وقتها لتجنب التأخير وضياع الدرجات.</p>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: var(--secondary-color); margin-bottom: 10px;">جودة مضمونة</h3>
+            <p>عملنا يتم بدون نسخ ولصق لضمان عمل أصلي يحمي الطالب من الغش.</p>
+        </div>
+    </div>
+
+    <section class="glass-card animate-fade-in delay-2" style="max-width: 800px; margin: 0 auto;">
+        <h3 style="margin-bottom: 20px; text-align: center; font-size: 1.8rem;">نموذج طلب حل واجب</h3>
+        
+        <form id="supabase-form">
+            <input type="hidden" id="form-type" value="homework-request">
+            
+            <div class="grid-3" style="margin-top: 0; gap: 20px;">
+                <div class="form-group">
+                    <label>اسم صاحب الطلب</label>
+                    <input type="text" id="input-name" class="form-control" required placeholder="فلان الفلاني">
+                </div>
+                
+                <div class="form-group">
+                    <label>رقم الواتساب (السعودية)</label>
+                    <input type="tel" id="input-phone" class="form-control" required placeholder="05XXXXXXXX" pattern="^(05)[0-9]{8}$" dir="ltr" style="text-align: right;" title="الرجاء إدخال رقم سعودي يبدأ بـ 05 ويتكون من 10 أرقام">
+                </div>
+                
+                <div class="form-group">
+                    <label>الجامعة</label>
+                    <select id="input-university" class="form-control" required style="appearance: none; background: rgba(0,0,0,0.2);" onchange="this.nextElementSibling.style.display = this.value === 'other' ? 'block' : 'none'; this.nextElementSibling.required = this.value === 'other';">
+                        <option value="">-- اختر جامعتك --</option>
+                        <option value="ksu">جامعة الملك سعود</option>
+                        <option value="kau">جامعة الملك عبدالعزيز</option>
+                        <option value="kfupm">جامعة الملك فهد للبترول والمعادن</option>
+                        <option value="imsiu">جامعة الإمام محمد بن سعود</option>
+                        <option value="pnu">جامعة الأميرة نورة</option>
+                        <option value="uqu">جامعة أم القرى</option>
+                        <option value="kfu">جامعة الملك فيصل</option>
+                        <option value="kku">جامعة الملك خالد</option>
+                        <option value="qu">جامعة القصيم</option>
+                        <option value="taibahu">جامعة طيبة</option>
+                        <option value="tu">جامعة الطائف</option>
+                        <option value="ju">جامعة جازان</option>
+                        <option value="ut">جامعة تبوك</option>
+                        <option value="seu">الجامعة السعودية الإلكترونية</option>
+                        <option value="other">جامعة أخرى / غير ذلك</option>
+                    </select>
+                    <input type="text" id="input-university-other" class="form-control" placeholder="اكتب اسم الجامعة هنا..." style="display: none; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label>اسم المادة</label>
+                <input type="text" id="input-subject" class="form-control" required placeholder="مثال: هياكل البيانات">
+            </div>
+
+            <div class="form-group">
+                <label>موعد التسليم (Deadline)</label>
+                <input type="date" id="input-deadline" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>تفاصيل الواجب</label>
+                <textarea id="input-details" class="form-control" rows="4" required placeholder="اكتب تفاصيل الواجب هنا..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>إرفاق ملفات الواجب (اختياري - بحد أقصى 5 ملفات صور أو PDF)</label>
+                <input type="file" id="input-files" class="form-control" multiple accept=".pdf,.png,.jpg,.jpeg">
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-primary" style="width: 100%; font-size: 1.2rem; padding: 15px;">إرسال الطلب</button>
+        </form>
+    </section>
+</main>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | Nice Software</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 100px auto 50px auto;
+            padding: 20px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .admin-table th, .admin-table td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .admin-table th {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .admin-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            background: #ff4757;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient-1"></div>
+    <div class="bg-gradient-2"></div>
+
+    <header>
+        <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <img src="images/logo.png" alt="Nice Software Logo" style="height: 40px; border-radius: 8px;">
+            <span style="font-weight: 800; letter-spacing: 1px;">Nice Software | الإدارة</span>
+        </div>
+        <a href="/" class="btn-primary" style="background: transparent; border: 1px solid var(--primary-color);">العودة للموقع</a>
+    </header>
+
+    <main class="container admin-container">
+        <!-- Login Section -->
+        <section id="login-section" class="glass-card" style="max-width: 400px; margin: 50px auto;">
+            <h2 style="text-align: center; margin-bottom: 20px;">تسجيل الدخول</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="admin-email" class="form-control" required style="direction: ltr;">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="admin-password" class="form-control" required style="direction: ltr;">
+                </div>
+                <button type="submit" id="login-btn" class="btn-primary" style="width: 100%;">دخول</button>
+            </form>
+        </section>
+
+        <!-- MFA Verification Section -->
+        <section id="mfa-verify-section" class="glass-card hidden" style="max-width: 400px; margin: 50px auto; text-align: center;">
+            <h2 style="margin-bottom: 20px;">التحقق الثنائي (2FA)</h2>
+            <p style="margin-bottom: 20px;">الرجاء إدخال الرمز المكون من 6 أرقام من تطبيق المصادقة.</p>
+            <form id="mfa-verify-form">
+                <div class="form-group">
+                    <input type="text" id="mfa-verify-code" class="form-control" placeholder="123456" required style="direction: ltr; text-align: center; letter-spacing: 5px; font-size: 1.5rem;" maxlength="6" pattern="\d{6}">
+                </div>
+                <button type="submit" id="mfa-verify-btn" class="btn-primary" style="width: 100%; margin-bottom: 10px;">تحقق</button>
+                <button type="button" id="mfa-reset-btn" class="btn-primary" style="width: 100%; background: transparent; border: 1px solid #ff4757; color: #ff4757;">إعادة تعيين (لم أقم بالمسح)</button>
+            </form>
+        </section>
+
+        <!-- MFA Enrollment Section -->
+        <section id="mfa-enroll-section" class="glass-card hidden" style="max-width: 400px; margin: 50px auto; text-align: center;">
+            <h2 style="margin-bottom: 20px;">إعداد التحقق الثنائي (2FA)</h2>
+            <p style="margin-bottom: 20px;">لحماية حسابك، يرجى مسح رمز الاستجابة السريعة (QR Code) باستخدام تطبيق مصادقة مثل Google Authenticator.</p>
+            <div id="qr-code-container" style="background: white; padding: 10px; border-radius: 8px; display: inline-block; margin-bottom: 20px;">
+                <!-- SVG will be injected here -->
+            </div>
+            <p style="margin-bottom: 20px; font-size: 0.9rem; color: #cbd5e1;">بعد المسح، أدخل الرمز المكون من 6 أرقام لتفعيل الخدمة.</p>
+            <form id="mfa-enroll-form">
+                <div class="form-group">
+                    <input type="text" id="mfa-enroll-code" class="form-control" placeholder="123456" required style="direction: ltr; text-align: center; letter-spacing: 5px; font-size: 1.5rem;" maxlength="6" pattern="\d{6}">
+                </div>
+                <button type="submit" id="mfa-enroll-btn" class="btn-primary" style="width: 100%;">تفعيل</button>
+            </form>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>لوحة الإدارة</h2>
+                <button id="logout-btn" class="btn-primary" style="background: rgba(0,0,0,0.5);">تسجيل خروج</button>
+            </div>
+            
+            <div class="admin-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; overflow-x: auto;">
+                <button class="btn-primary tab-btn active" data-target="tab-requests">الطلبات المستلمة</button>
+                <button class="btn-primary tab-btn" style="background: transparent; border: 1px solid var(--primary-color);" data-target="tab-services">إدارة الخدمات</button>
+                <button class="btn-primary tab-btn" style="background: transparent; border: 1px solid var(--primary-color);" data-target="tab-projects">إدارة المشاريع</button>
+                <button class="btn-primary tab-btn" style="background: transparent; border: 1px solid var(--primary-color);" data-target="tab-reviews">إدارة الآراء</button>
+                <button class="btn-primary tab-btn" style="background: transparent; border: 1px solid var(--primary-color);" data-target="tab-news">إدارة الأخبار</button>
+            </div>
+
+            <!-- Requests Tab -->
+            <div id="tab-requests" class="tab-content">
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>الاسم</th>
+                                <th>رقم الواتساب</th>
+                                <th>الجامعة</th>
+                                <th>التفاصيل</th>
+                                <th>الملفات</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-tbody">
+                            <tr><td colspan="7" style="text-align: center;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Services Tab -->
+            <div id="tab-services" class="tab-content hidden">
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <h3>إضافة خدمة جديدة</h3>
+                    <form id="add-service-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <input type="text" id="svc-title" class="form-control" placeholder="عنوان الخدمة" required>
+                        <input type="text" id="svc-link" class="form-control" placeholder="الرابط (مثال: /project-service)" required>
+                        <input type="text" id="svc-color" class="form-control" placeholder="اللون (مثال: --primary-color)" required>
+                        <textarea id="svc-desc" class="form-control" placeholder="وصف الخدمة" required style="grid-column: 1 / -1;"></textarea>
+                        <input type="hidden" id="svc-edit-id">
+                        <div style="grid-column: 1 / -1; display: flex; gap: 10px;">
+                            <button type="submit" id="svc-submit-btn" class="btn-primary" style="flex: 1;">إضافة</button>
+                            <button type="button" id="svc-cancel-btn" class="btn-primary hidden" style="flex: 1; background: transparent; border: 1px solid #ff4757; color: #ff4757;">إلغاء التعديل</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>العنوان</th>
+                                <th>الوصف</th>
+                                <th>الرابط</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="services-tbody">
+                            <tr><td colspan="4" style="text-align: center;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="tab-projects" class="tab-content hidden">
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <h3>إضافة مشروع جديد</h3>
+                    <form id="add-project-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <input type="text" id="proj-title" class="form-control" placeholder="عنوان المشروع" required>
+                        <input type="text" id="proj-category" class="form-control" placeholder="التقنيات (مثال: React, Node)" required>
+                        <input type="text" id="proj-image" class="form-control" placeholder="رابط الصورة (اختياري)">
+                        <textarea id="proj-link" class="form-control" placeholder="وصف المشروع" rows="2" style="grid-column: 1 / -1;"></textarea>
+                        <input type="hidden" id="proj-edit-id">
+                        <div style="grid-column: 1 / -1; display: flex; gap: 10px;">
+                            <button type="submit" id="proj-submit-btn" class="btn-primary" style="flex: 1;">إضافة</button>
+                            <button type="button" id="proj-cancel-btn" class="btn-primary hidden" style="flex: 1; background: transparent; border: 1px solid #ff4757; color: #ff4757;">إلغاء التعديل</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>العنوان</th>
+                                <th>التقنيات</th>
+                                <th>الصورة</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-tbody">
+                            <tr><td colspan="4" style="text-align: center;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div id="tab-reviews" class="tab-content hidden">
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <h3>إضافة رأي جديد</h3>
+                    <form id="add-review-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <input type="text" id="rev-name" class="form-control" placeholder="اسم العميل" required>
+                        <input type="text" id="rev-major" class="form-control" placeholder="التخصص / الجامعة" required>
+                        <input type="number" id="rev-rating" class="form-control" placeholder="التقييم (من 1 إلى 5)" min="1" max="5" required>
+                        <textarea id="rev-text" class="form-control" placeholder="نص الرأي" rows="3" required style="grid-column: 1 / -1;"></textarea>
+                        <input type="hidden" id="rev-edit-id">
+                        <div style="grid-column: 1 / -1; display: flex; gap: 10px;">
+                            <button type="submit" id="rev-submit-btn" class="btn-primary" style="flex: 1;">إضافة</button>
+                            <button type="button" id="rev-cancel-btn" class="btn-primary hidden" style="flex: 1; background: transparent; border: 1px solid #ff4757; color: #ff4757;">إلغاء التعديل</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>التخصص</th>
+                                <th>التقييم</th>
+                                <th>نص الرأي</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reviews-tbody">
+                            <tr><td colspan="5" style="text-align: center;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- News Tab -->
+            <div id="tab-news" class="tab-content hidden">
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <h3>إضافة خبر جديد</h3>
+                    <form id="add-news-form" style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;">
+                        <input type="text" id="news-title" class="form-control" placeholder="عنوان الخبر" required>
+                        <textarea id="news-content" class="form-control" placeholder="تفاصيل الخبر" required rows="4"></textarea>
+                        <input type="hidden" id="news-edit-id">
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" id="news-submit-btn" class="btn-primary" style="flex: 1;">إضافة</button>
+                            <button type="button" id="news-cancel-btn" class="btn-primary hidden" style="flex: 1; background: transparent; border: 1px solid #ff4757; color: #ff4757;">إلغاء التعديل</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>العنوان</th>
+                                <th>المحتوى</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="news-tbody">
+                            <tr><td colspan="4" style="text-align: center;">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script defer src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<main class="container">
+    <section class="page-header animate-fade-in">
+        <h1>دورات لايف</h1>
+        <p>طور مهاراتك من خلال دورات لايف تفاعلية مع نخبة من الخبراء.</p>
+    </section>
+
+    <div class="grid-3 animate-fade-in delay-1" style="margin-bottom: 50px;">
+        <div class="glass-card">
+            <h3 style="color: var(--accent-color); margin-bottom: 10px;">بث مباشر</h3>
+            <p>تفاعل مع المدرب بشكل مباشر وتلقى إجابات فورية على أسئلتك.</p>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: var(--primary-color); margin-bottom: 10px;">تطبيق عملي</h3>
+            <p>ركزنا في دوراتنا على الجانب التطبيقي العملي اللي يهمك في سوق العمل.</p>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: var(--secondary-color); margin-bottom: 10px;">شهادات معتمدة</h3>
+            <p>احصل على شهادة بعد اجتياز الدورة بنجاح لتعزيز سيرتك الذاتية.</p>
+        </div>
+    </div>
+
+    <section class="glass-card animate-fade-in delay-2" style="max-width: 800px; margin: 0 auto;">
+        <h3 style="margin-bottom: 20px; text-align: center; font-size: 1.8rem;">التسجيل في دورة لايف</h3>
+        
+        <form id="supabase-form">
+            <input type="hidden" id="form-type" value="course-request">
+            
+            <div class="grid-3" style="margin-top: 0; gap: 20px;">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="input-name" class="form-control" required placeholder="فلان الفلاني">
+                </div>
+                
+                <div class="form-group">
+                    <label>رقم الواتساب (السعودية)</label>
+                    <input type="tel" id="input-phone" class="form-control" required placeholder="05XXXXXXXX" pattern="^(05)[0-9]{8}$" dir="ltr" style="text-align: right;" title="الرجاء إدخال رقم سعودي يبدأ بـ 05 ويتكون من 10 أرقام">
+                </div>
+                
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="input-email" class="form-control" required placeholder="example@email.com">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label>اسم الدورة اللي حاب تسجل فيها</label>
+                <input type="text" id="input-course" class="form-control" required placeholder="مثال: دورة بايثون للمبتدئين">
+            </div>
+
+            <div class="form-group">
+                <label>ملاحظات إضافية (اختياري)</label>
+                <textarea id="input-details" class="form-control" rows="3" placeholder="أي استفسارات أو ملاحظات إضافية..."></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-primary" style="width: 100%; font-size: 1.2rem; padding: 15px;">تسجيل في الدورة</button>
+        </form>
+    </section>
+</main>

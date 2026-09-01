@@ -1,0 +1,23 @@
+<main class="container">
+    <section class="page-header animate-fade-in">
+        <h1>طلباتي</h1>
+        <p>أدخل رقم الواتساب الذي استخدمته في الطلب لعرض طلباتك والملفات المرفوعة.</p>
+    </section>
+
+    <section style="max-width: 600px; margin-left: auto; margin-right: auto;" class="glass-card animate-fade-in delay-1">
+        <form id="search-orders-form" style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="form-group">
+                <label>رقم الواتساب</label>
+                <input type="tel" id="search-phone" class="form-control" required placeholder="05XXXXXXXX" pattern="^(05)[0-9]{8}$" dir="ltr" style="text-align: right;" title="الرجاء إدخال رقم سعودي يبدأ بـ 05 ويتكون من 10 أرقام">
+            </div>
+            <button type="submit" id="search-btn" class="btn-primary" style="width: 100%;">بحث</button>
+        </form>
+    </section>
+
+    <section id="orders-results" style="margin-top: 40px; display: none;" class="animate-fade-in delay-2">
+        <h3 style="margin-bottom: 20px;">الطلبات السابقة</h3>
+        <div id="orders-container" style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Orders will be injected here -->
+        </div>
+    </section>
+</main>
