@@ -622,6 +622,12 @@
     sort$1$ax(receiver, a0) {
       return J.getInterceptor$ax(receiver).sort$1(receiver, a0);
     },
+    startsWith$1$s(receiver, a0) {
+      return J.getInterceptor$s(receiver).startsWith$1(receiver, a0);
+    },
+    substring$1$s(receiver, a0) {
+      return J.getInterceptor$s(receiver).substring$1(receiver, a0);
+    },
     substring$2$s(receiver, a0, a1) {
       return J.getInterceptor$s(receiver).substring$2(receiver, a0, a1);
     },
@@ -28916,7 +28922,7 @@
     _handleRoute$0() {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$handler = 1, $async$errorStack = [], $async$self = this, pageName, response, myOrdersView, requestRepo, reviewRepo, t1, t2, exception, path0, path, $async$exception;
+        $async$handler = 1, $async$errorStack = [], $async$self = this, pageName, response, myOrdersView, requestRepo, reviewRepo, basePath, t1, t2, exception, path0, path, $async$exception;
       var $async$_handleRoute$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$errorStack.push($async$result);
@@ -28930,6 +28936,13 @@
               path = path0 == null ? "/" : path0;
               if (J.get$length$asx(path) > 1 && J.endsWith$1$s(path, "/"))
                 path = J.substring$2$s(path, 0, J.get$length$asx(path) - 1);
+              basePath = $async$self._getBasePath$0();
+              t1 = basePath.length;
+              if (t1 !== 0 && J.startsWith$1$s(path, basePath)) {
+                path = J.substring$1$s(path, t1);
+                if (J.get$length$asx(path) === 0)
+                  path = "/";
+              }
               if (J.$eq$(path, "/") || J.get$length$asx(path) === 0)
                 path = "/home";
               pageName = J.replaceFirst$2$s(path, "/", "");
@@ -29104,6 +29117,22 @@
           t5.color = "var(--primary-color)";
         }
       }
+    },
+    _getBasePath$0() {
+      var segments,
+        t1 = type$.Location,
+        hostname = t1._as(window.location).hostname;
+      if (B.JSString_methods.endsWith$1(hostname == null ? "" : hostname, "github.io")) {
+        t1 = t1._as(window.location).pathname;
+        segments = (t1 == null ? "/" : t1).split("/");
+        t1 = segments.length;
+        if (t1 > 1 && segments[1].length !== 0) {
+          if (1 >= t1)
+            return A.ioore(segments, 1);
+          return "/" + segments[1];
+        }
+      }
+      return "";
     }
   };
   A.SpaRouter_closure.prototype = {
@@ -30443,3 +30472,5 @@
     }
   });
 })();
+
+//# sourceMappingURL=app.js.map

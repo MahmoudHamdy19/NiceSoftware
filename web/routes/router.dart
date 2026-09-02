@@ -94,6 +94,14 @@ class SpaRouter {
       path = path.substring(0, path.length - 1);
     }
 
+    // GitHub Pages project sites are served under a subfolder (e.g., /NiceSoftware/)
+    // Detect and strip the base path prefix so routing works correctly
+    final basePath = _getBasePath();
+    if (basePath.isNotEmpty && path.startsWith(basePath)) {
+      path = path.substring(basePath.length);
+      if (path.isEmpty) path = '/';
+    }
+
     // Default to home
     if (path == '/' || path.isEmpty) {
       path = '/home';
@@ -162,5 +170,21 @@ class SpaRouter {
         link.style.color = 'var(--primary-color)';
       }
     }
+  }
+
+  /// Returns the base path prefix for GitHub Pages project sites.
+  /// e.g., returns '/NiceSoftware' when hosted at username.github.io/NiceSoftware/
+  /// Returns empty string when running locally or on a custom root domain.
+  String _getBasePath() {
+    final hostname = html.window.location.hostname ?? '';
+    // GitHub Pages project sites use *.github.io and are served under a subfolder
+    if (hostname.endsWith('github.io')) {
+      final segments = (html.window.location.pathname ?? '/').split('/');
+      // pathname starts with '/', so segments[0] is empty, segments[1] is the repo name
+      if (segments.length > 1 && segments[1].isNotEmpty) {
+        return '/${segments[1]}';
+      }
+    }
+    return '';
   }
 }
