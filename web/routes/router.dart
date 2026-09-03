@@ -70,8 +70,11 @@ class SpaRouter {
       if (href != null && href.startsWith('/') && !href.startsWith('//')) {
         event.preventDefault();
 
-        // Push state and trigger route manually
-        html.window.history.pushState(null, '', href);
+        // Prepend base path so the full URL is correct on GitHub Pages
+        // e.g., /services → /NiceSoftware/services
+        final basePath = _getBasePath();
+        final fullHref = basePath + href;
+        html.window.history.pushState(null, '', fullHref);
         _handleRoute();
 
         // If on mobile, close the mobile menu if it's open

@@ -28886,7 +28886,7 @@
       }
     },
     _handleLinkClick$1($event) {
-      var target, t1, href, nav, toggleBtn;
+      var target, t1, href, basePath, nav, toggleBtn;
       type$.MouseEvent._as($event);
       target = type$.nullable_Element._as(A._convertNativeToDart_EventTarget($event.target));
       t1 = type$.AnchorElement;
@@ -28899,9 +28899,10 @@
         href = target.getAttribute("href");
         if (href != null && B.JSString_methods.startsWith$1(href, "/") && !B.JSString_methods.startsWith$1(href, "//")) {
           $event.preventDefault();
+          basePath = this._getBasePath$0();
           t1 = window.history;
           t1.toString;
-          t1.pushState(new A._StructuredCloneDart2Js([], []).walk$1(null), "", href);
+          t1.pushState(new A._StructuredCloneDart2Js([], []).walk$1(null), "", basePath + href);
           this._handleRoute$0();
           t1 = document;
           nav = t1.querySelector("header nav");
